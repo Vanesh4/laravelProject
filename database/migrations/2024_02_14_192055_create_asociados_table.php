@@ -12,15 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('asociados', function (Blueprint $table) {
+            //$table->id();
             $table->bigInteger('cedula')->primary();
-            $table->string('nombre');
             $table->string('apellido');
+            $table->string('nombre');
             $table->integer('distrito_id');
-            $table->string('direccion');
-            $table->integer('ciudad_id');
+            $table->string('direccion')->nullable();
+            $table->integer('ciudad_id')->nullable();
             $table->boolean('estado')->default(true);
-            $table->bigInteger('celular');
-            $table->string('email');
+            $table->string('celular')->nullable();
+            $table->string('email')->nullable();
             $table->text('observacion_familia')->nullable();
             $table->text('observacion')->nullable();
             $table->softDeletes();
