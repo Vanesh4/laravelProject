@@ -15,11 +15,9 @@
         <input type="text" name="id" placeholder="Buscar por cedula">
         <button type="submit">Buscar</button>
     </form>
-    @foreach ($asociados as $asociado)
-    <p>{{ $asociado->cedula }}</p>
-    @endforeach
+
     <!-- Mostrar todos los asociados -->
-    <div class="mx-5">
+    <div class="mx-3">
         <table class="table">
             <thead>
                 <tr>
@@ -39,7 +37,7 @@
             <tbody>
                 @foreach ($asociados as $asociado)
                     <tr>
-                        <td>{{ $asociado->cod_cli }}</td>
+                        <td>{{ $asociado->cedula }}</td>
                         <td>{{ $asociado->apellido }}</td>
                         <td>{{ $asociado->nombre }}</td>
                         <td>{{ $asociado->cod_dis }}</td>
