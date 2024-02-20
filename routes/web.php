@@ -28,4 +28,7 @@ Route::middleware([
     })->name('dashboard');
 });
 
+//Route::get('asociados/pdf', [AsociadoController::class, 'generarpdf'])->name('repPDF');
+Route::get('/asociados/{id}/generarpdf', [AsociadoController::class, 'generarpdf'])->name('asociados.generarpdf');
+
 Route::resource('asociados', AsociadoController::class);

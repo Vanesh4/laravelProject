@@ -40,14 +40,14 @@
                         <td>{{ $asociado->cedula }}</td>
                         <td>{{ $asociado->apellido }}</td>
                         <td>{{ $asociado->nombre }}</td>
-                        <td>{{ $asociado->cod_dis }}</td>
-                        <td>{{ $asociado->dir_casa }}</td>
-                        <td>{{ $asociado->cod_ciu }}</td>
+                        <td>{{ $asociado->distrito_id }}</td>
+                        <td>{{ $asociado->direccion }}</td>
+                        <td>{{ $asociado->ciudad_id }}</td>
                         <td>{{ $asociado->estado }}</td>
-                        <td>{{ $asociado->tel_casa }}</td>
+                        <td>{{ $asociado->celular }}</td>
                         <td>{{ $asociado->email }}</td>
-                        <td>{{ $asociado->benef }}</td>
-                        <td>{{ $asociado->observ }}</td>
+                        <td>{{ $asociado->observacion }}</td>
+                        <td>{{ $asociado->observacion_familia }}</td>
                     </tr>
                 @endforeach
             </tbody>
