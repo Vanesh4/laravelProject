@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Asociado extends Model
 {
     use HasFactory;
+    
+    public function beneficiarios()
+    {
+        return $this->hasMany(Beneficiario::class, 'cedulaAsociado', 'cedula');
+    }
 }

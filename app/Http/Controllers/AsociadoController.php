@@ -14,14 +14,10 @@ class AsociadoController extends Controller
 
     public function show(Request $request, $id)
     {
-        // Obtener el ID del asociado de la solicitud
         $id = $request->input('id');
-
-        // Buscar el asociado por el ID
         $asociado = Asociado::where('cedula', $id)->first();
-
-        // Pasar los detalles del asociado a la vista
         return view('asociados.show', compact('asociado'));
     }
+    
 
 }
