@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class AsociadoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
+
     public function index(){
         $asociados = Asociado::all();
         return view('asociados.index', ['asociados' => $asociados]);
@@ -27,6 +32,8 @@ class AsociadoController extends Controller
         return view('asociados.show', compact('asociado', 'beneficiarios'));
     
     }
+
+    
 
     public function generarpdf($id)
     {
