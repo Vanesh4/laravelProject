@@ -115,14 +115,14 @@
                                 <div class="table-responsive">
                                     <table class="table table-striped">
                                         <thead class=" text-primary">
-                                            <th>Cédula</th>                                            
+                                            <th>Cédula</th>
                                             <th>Nombre</th>
                                             <th>Distrito</th>
                                             <th>Ciudad</th>
                                             {{-- <th>Dirección</th> --}}
                                             <th>Estado</th>
                                             <th>Celular</th>
-                                            {{--<th>Email</th>
+                                            {{-- <th>Email</th>
                                             <th>Observación Familia</th>
                                             <th>Observación</th>
                                             <th class="text-right">
@@ -133,11 +133,29 @@
                                             @foreach ($asociados as $asociado)
                                                 <tr>
                                                     <td>{{ $asociado->cedula }}</td>
-                                                    <td>{{ $asociado->apellido . " " . $asociado->nombre }}</td>
-                                                    <td>{{ $asociado->distrito_id }}</td>
-                                                    <td>{{ $asociado->ciudad_id }}</td>
+                                                    <td>{{ $asociado->apellido . ' ' . $asociado->nombre }}</td>
+
+                                                    @if ($asociado->distrito_id !== 0)
+                                                        <td>{{ $asociado->distrito_id }}</td>
+                                                    @else
+                                                        <td></td>
+                                                    @endif
+
+                                                    @if ($asociado->distrito_id !== 0)
+                                                        <td>{{ $asociado->ciudade ? $asociado->ciudade->nombre : '' }}
+                                                        </td>
+                                                    @else
+                                                        <td></td>
+                                                    @endif
+
                                                     {{-- <td>{{ $asociado->direccion }}</td> --}}
-                                                    <td>{{ $asociado->estado }}</td>
+
+                                                    @if ($asociado->estado == 1)
+                                                        <td><button type="button" class="btn btn-success">ACTIVO</button></td>
+                                                    @else
+                                                        <td></td>
+                                                    @endif
+
                                                     <td>{{ $asociado->celular }}</td>
                                                     {{-- <td>{{ $asociado->email }}</td>
                                                     <td>{{ $asociado->observacion }}</td>

@@ -15,7 +15,8 @@ class AsociadoController extends Controller
     // }
 
     public function index(){
-        $asociados = Asociado::all();
+        //$asociados = Asociado::all();
+        $asociados = Asociado::with('ciudade')->get();
         return view('asociados.index', ['asociados' => $asociados]);
     }
 
