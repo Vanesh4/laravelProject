@@ -4072,7 +4072,7 @@ Created using IcoMoon - icomoon.io
 
 .sidebar[data-color="blue"]:after,
 .off-canvas-sidebar[data-color="blue"]:after {
-  background: #0F1035;
+  background: #dbdbdb;
 }
 
 .sidebar[data-color="blue"] .nav li.active>a:not([data-toggle="collapse"]),
