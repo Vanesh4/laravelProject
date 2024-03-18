@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //[Corpentunida_Emp010].[dbo].[CoMae_ExRelPar]
         Schema::create('beneficiarios', function (Blueprint $table) {
             $table->bigInteger('cedula');
             $table->string('nombre');
-            $table->string('paretentezco');
+            $table->string('parentezco');
             $table->bigInteger('cedulaAsociado');
             $table->date('fechaNacimiento');
             $table->date('fechaIngreso');

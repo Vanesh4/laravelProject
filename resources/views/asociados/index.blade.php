@@ -55,39 +55,22 @@
                         <span class="navbar-toggler-bar navbar-kebab"></span>
                     </button>
                     <div class="collapse navbar-collapse justify-content-end" id="navigation">
-                        <form>
+
+
+                        {{-- Buscador Cedulaaaa --}}
+                        <form action="{{ route('asociados.show', ['asociado' => 'ID']) }}" method="GET">
                             <div class="input-group no-border">
-                                <input type="text" value="" class="form-control" placeholder="Search...">
+                                <input type="text" name="id" value="" class="form-control"
+                                    placeholder="Search...">
                                 <div class="input-group-append">
-                                    <div class="input-group-text">
+                                    <button class="input-group-text" type="submit">
                                         <i class="now-ui-icons ui-1_zoom-bold"></i>
-                                    </div>
+                                    </button>
                                 </div>
                             </div>
                         </form>
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#pablo">
-                                    <i class="now-ui-icons media-2_sound-wave"></i>
-                                    <p>
-                                        <span class="d-lg-none d-md-block">Stats</span>
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <i class="now-ui-icons location_world"></i>
-                                    <p>
-                                        <span class="d-lg-none d-md-block">Some Actions</span>
-                                    </p>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                            </li>
+
+                        <ul class="navbar-nav">                            
                             <li class="nav-item">
                                 <a class="nav-link" href="#pablo">
                                     <i class="now-ui-icons users_single-02"></i>
@@ -141,7 +124,7 @@
                                                         <td></td>
                                                     @endif
 
-                                                    @if ($asociado->distrito_id !== 0)
+                                                    @if ($asociado->ciudad_id !== null && $asociado->ciudad_id !== 0)
                                                         <td>{{ $asociado->ciudade ? $asociado->ciudade->nombre : '' }}
                                                         </td>
                                                     @else
@@ -151,7 +134,8 @@
                                                     {{-- <td>{{ $asociado->direccion }}</td> --}}
 
                                                     @if ($asociado->estado == 1)
-                                                        <td><button type="button" class="btn btn-success">ACTIVO</button></td>
+                                                        <td><button type="button"
+                                                                class="btn btn-success py-1">ACTIVO</button></td>
                                                     @else
                                                         <td></td>
                                                     @endif
@@ -166,6 +150,35 @@
                                     </table>
                                 </div>
                             </div>
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+
+                                    <li class="page-item {{ $asociados->previousPageUrl() ? '' : 'disabled' }}">
+
+                                        <a class="page-link" href="{{ $asociados->previousPageUrl() }}">
+                                            <i class="now-ui-icons arrows-1_minimal-left"></i>
+                                        </a>
+                                    </li>
+
+                                    @php
+                                        $start = max(1, $asociados->currentPage() - 1);
+                                        $end = min($start + 2, $asociados->lastPage());
+                                    @endphp
+
+                                    @for ($i = $start; $i <= $end; $i++)
+                                        <li class="page-item {{ $asociados->currentPage() == $i ? 'active' : '' }}">
+                                            <a class="page-link"
+                                                href="{{ $asociados->url($i) }}">{{ $i }}</a>
+                                        </li>
+                                    @endfor
+
+                                    <li class="page-item {{ $asociados->nextPageUrl() ? '' : 'disabled' }}">
+                                        <a class="page-link" href="{{ $asociados->nextPageUrl() }}">
+                                            <i class="now-ui-icons arrows-1_minimal-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>

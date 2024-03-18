@@ -53,38 +53,19 @@
             <span class="navbar-toggler-bar navbar-kebab"></span>
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navigation">
-            <form>
-              <div class="input-group no-border">
-                <input type="text" value="" class="form-control" placeholder="Search...">
-                <div class="input-group-append">
-                  <div class="input-group-text">
-                    <i class="now-ui-icons ui-1_zoom-bold"></i>
-                  </div>
-                </div>
-              </div>
-            </form>
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="#pablo">
-                  <i class="now-ui-icons media-2_sound-wave"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Stats</span>
-                  </p>
-                </a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="now-ui-icons location_world"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Some Actions</span>
-                  </p>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-              </li>
+            {{-- Buscador Cedulaaaa --}}
+            <form action="{{ route('asociados.show', ['asociado' => 'ID']) }}" method="GET">
+                            <div class="input-group no-border">
+                                <input type="text" name="id" value="" class="form-control"
+                                    placeholder="Search...">
+                                <div class="input-group-append">
+                                    <button class="input-group-text" type="submit">
+                                        <i class="now-ui-icons ui-1_zoom-bold"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+            <ul class="navbar-nav">              
               <li class="nav-item">
                 <a class="nav-link" href="#pablo">
                   <i class="now-ui-icons users_single-02"></i>
@@ -101,7 +82,7 @@
       <div class="panel-header panel-header-lg">
         <canvas id="bigDashboardChart"></canvas>
       </div>
-      <div class="content">
+      <!-- <div class="content">
         <div class="row">
           <div class="col-lg-4">
             <div class="card card-chart">
@@ -362,7 +343,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <footer class="footer">
         <div class=" container-fluid ">
           <nav>

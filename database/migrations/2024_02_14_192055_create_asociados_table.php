@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //[Corpentunida_Emp010].[dbo].[Comae_ter]
         Schema::create('asociados', function (Blueprint $table) {
             //$table->id();
             $table->bigInteger('cedula')->primary();
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->boolean('estado')->default(true);
             $table->string('celular')->nullable();
             $table->string('email')->nullable();
+            $table->date('fechaNacimiento');
             $table->text('observacion_familia')->nullable();
             $table->text('observacion')->nullable();
             $table->softDeletes();

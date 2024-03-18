@@ -9,14 +9,14 @@ use Illuminate\Http\Request;
 
 class AsociadoController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware(['auth']);
-    // }
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
 
     public function index(){
         //$asociados = Asociado::all();
-        $asociados = Asociado::with('ciudade')->get();
+        $asociados = Asociado::with('ciudade')->paginate(6);
         return view('asociados.index', ['asociados' => $asociados]);
     }
 
@@ -43,7 +43,7 @@ class AsociadoController extends Controller
 
         $data = ['asociado' => $asociado, 'beneficiarios' => $beneficiarios];
 
-        $pdf = PDF::loadView('asociados.show', $data);
+        $pdf = PDF::loadView('asociados.show', $data)->setPaper('landscape');
         //return $pdf->stream();
         return $pdf->download(date('Y-m-d') .  $asociado->nombre . '.pdf');
     }
