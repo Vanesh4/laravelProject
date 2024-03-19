@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AsociadoController;
+use App\Http\Controllers\BeneficiarioController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,3 +34,4 @@ Route::middleware([
 Route::get('/asociados/{id}/generarpdf', [AsociadoController::class, 'generarpdf'])->name('asociados.generarpdf');
 
 Route::resource('asociados', AsociadoController::class);
+Route::resource('beneficiarios', BeneficiarioController::class);

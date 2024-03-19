@@ -21,19 +21,25 @@ class AsociadoController extends Controller
     }
 
     public function show(Request $request, $id)
-    {
-        // $id = $request->input('id');
-        // $asociado = Asociado::where('cedula', $id)->first();
-        // return view('asociados.show', compact('asociado'));
-        
+    {        
+        //cedula por url asociados/ID?id=
         $id = $request->input('id');
         $asociado = Asociado::where('cedula', $id)->firstOrFail();
-        $beneficiarios = beneficiario::where('cedulaAsociado', $id)->get();
-        //$beneficiarios = $asociado->beneficiarios;       
-        return view('asociados.show', compact('asociado', 'beneficiarios'));
-    
+        $beneficiarios = beneficiario::where('cedulaAsociado', $id)->get();   
+        return view('asociados.show', compact('asociado', 'beneficiarios'));    
     }
 
+
+    public function update(Request $request, $cedula)
+    {
+        Asociado::where('cedula', $cedula)
+            ->update(['fechaNacimiento' => $request->input('fechaNacimiento')]);
+
+            $asociado = Asociado::where('cedula', $cedula)->firstOrFail();
+            $beneficiarios = Beneficiario::where('cedulaAsociado', $cedula)->get();
+            return view('asociados.show', compact('asociado', 'beneficiarios'))->with('success', 'Datos actualizados');
+            
+    }
     
 
     public function generarpdf($id)

@@ -12,7 +12,7 @@ class Asociado extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $table = 'asociados'; // Nombre de la tabla en la base de datos
+    protected $table = 'comae_ter'; // Nombre de la tabla en la base de datos
     protected $primaryKey = 'cedula'; // Nombre de la clave primaria en la tabla
     public $incrementing = false; // Indica si la clave primaria es autoincrementable o no
 
