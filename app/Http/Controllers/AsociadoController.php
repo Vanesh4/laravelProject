@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Asociado;
 use App\Models\beneficiario;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -14,19 +15,21 @@ class AsociadoController extends Controller
         $this->middleware(['auth']);
     }
 
-    public function index(){
+    public function index()
+    {
         //$asociados = Asociado::all();
-        $asociados = Asociado::with('ciudade')->paginate(6);
+        $asociados = Asociado::with('ciudade')->paginate(10);
         return view('asociados.index', ['asociados' => $asociados]);
     }
 
     public function show(Request $request, $id)
-    {        
+    {
         //cedula por url asociados/ID?id=
         $id = $request->input('id');
         $asociado = Asociado::where('cedula', $id)->firstOrFail();
-        $beneficiarios = beneficiario::where('cedulaAsociado', $id)->get();   
-        return view('asociados.show', compact('asociado', 'beneficiarios'));    
+        $beneficiarios = beneficiario::where('cedulaAsociado', $id)->with('parentescoo')->get();        
+
+        return view('asociados.show', compact('asociado', 'beneficiarios'));
     }
 
 
@@ -35,12 +38,10 @@ class AsociadoController extends Controller
         Asociado::where('cedula', $cedula)
             ->update(['fechaNacimiento' => $request->input('fechaNacimiento')]);
 
-            $asociado = Asociado::where('cedula', $cedula)->firstOrFail();
-            $beneficiarios = Beneficiario::where('cedulaAsociado', $cedula)->get();
-            return view('asociados.show', compact('asociado', 'beneficiarios'))->with('success', 'Datos actualizados');
-            
+        $asociado = Asociado::where('cedula', $cedula)->firstOrFail();
+        $beneficiarios = Beneficiario::where('cedulaAsociado', $cedula)->get();
+        return view('asociados.show', compact('asociado', 'beneficiarios'))->with('success', 'Datos actualizados');
     }
-    
 
     public function generarpdf($id)
     {

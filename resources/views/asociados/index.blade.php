@@ -125,7 +125,7 @@
                                                     @endif
 
                                                     @if ($asociado->ciudad_id !== null && $asociado->ciudad_id !== 0)
-                                                        <td>{{ $asociado->ciudade ? $asociado->ciudade->nombre : '' }}
+                                                        <td>{{$asociado->ciudade->nombre}}
                                                         </td>
                                                     @else
                                                         <td></td>

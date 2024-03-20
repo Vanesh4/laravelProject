@@ -15,12 +15,13 @@ return new class extends Migration
         Schema::create('beneficiarios', function (Blueprint $table) {
             $table->bigInteger('cedula');
             $table->string('nombre');
-            $table->string('parentezco');
+            $table->string('parentesco');
             $table->bigInteger('cedulaAsociado');
             $table->date('fechaNacimiento');
             $table->date('fechaIngreso');
             $table->timestamps();
             $table->foreign('cedulaAsociado')->references('cedula')->on('asociados');
+            $table->foreign('parentesco')->references('codPar')->on('parentescos');
         });
     }
 

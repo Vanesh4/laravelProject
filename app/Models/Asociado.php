@@ -36,6 +36,7 @@ class Asociado extends Model
     {
         return $this->belongsTo(Distrito::class);
     } */
+
     public function beneficiarios()
     {
         return $this->hasMany(beneficiario::class, 'cedulaAsociado', 'cedula');
@@ -45,4 +46,5 @@ class Asociado extends Model
     {
         return $this->belongsTo(Cuidade::class, 'ciudad_id', 'codigo');
     }
+
 }

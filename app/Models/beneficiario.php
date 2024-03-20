@@ -14,7 +14,7 @@ class beneficiario extends Model
     protected $fillable = [
         'cedula',
         'nombre',
-        'parentezco',
+        'parentesco',
         'cedulaAsociado',
         'fechaNacimiento',
         'fechaIngreso',
@@ -35,4 +35,10 @@ class beneficiario extends Model
     {
         return $this->belongsTo(Asociado::class, 'cedulaAsociado', 'cedula');
     }
+
+    public function parentescoo()
+    {
+        return $this->belongsTo(Parentesco::class,'parentesco', 'codPar');
+    }
+
 }

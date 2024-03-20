@@ -130,8 +130,11 @@
                       <div class="form-control">{{ $asociado->direccion }}</div>
 
                       <label>Ciudad</label>
-                      <div class="form-control">{{ $asociado->ciudad_id }}</div>
-
+                      @if ($asociado->ciudad_id !== null && $asociado->ciudad_id !== 0)
+                        <div class="form-control">{{ $asociado->ciudade->nombre }}</div>
+                      @else
+                        <div class="form-control">{{ $asociado->ciudade }}</div>
+                      @endif
                       <label>Observaciones</label>
                       <p class="border border-secondary-subtle p-3">{{ $asociado->observacion_familia }}</p>
                     </div>
@@ -141,15 +144,15 @@
                       <div class="card-header">
                         <h5 class="card-category">Beneficiarios</h5>
                         <div class="card-body">
-                          <form method="POST">
+                          <form method="POST" id="fechasBeneficiarios">
                             @csrf
+                            @method('PUT')
                             <div class="table-responsive">
                               <table class="table">
-
                                 <tr>
                                   <th>Cédula</th>
                                   <th>Apellidos Nombre</th>
-                                  <th>Parentezco</th>
+                                  <th>Parentesco</th>
                                   <th>Fecha Nacimiento</th>
                                   <th>Edad</th>
                                 </tr>
@@ -158,7 +161,13 @@
                                 <tr>
                                   <td>{{ $beneficiario->cedula }}</td>
                                   <td>{{ $beneficiario->apellido . $beneficiario->nombre }}</td>
-                                  <td>{{ $beneficiario->paretentezco }}</td>
+                                  @if ($beneficiario->parentesco !== null && $beneficiario->parentesco !== 0)
+                                  <td>{{ $beneficiario->parentescoo->nomPar }}</td>
+                                  @else
+                                  <td>{{ $beneficiario->parentesco }}</td>
+                                  @endif
+                                  
+                                  
                                   <input type="hidden" name="ids[]" value="{{ $beneficiario->cedula }}">
                                   <td><input type="date" name="fechas[]" class="form-control" value="{{ $beneficiario->fechaNacimiento }}"></td>
                                   @php
@@ -172,7 +181,7 @@
                                 </tr>
                                 @endforeach
                               </table>
-                              <button type="submit">Actualizar fechas</button>
+                              <button class="input-group-text" type="submit">Actualizar fechas</button>
                           </form>
                         </div>
                       </div>
@@ -180,22 +189,25 @@
                   </div>
                 </div>
 
+
                 <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-auto">
                     <div class="form-group">
                       <a href="{{ route('asociados.generarpdf', ['id' => $asociado->cedula]) }}" target="_blank" class="btn btn-primary">Generar PDF</a>
+                    </div>
+                  </div>
+                  <div class="col-md-auto">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Actualizar Fecha</button>
+                    <div class="form-group">
                       <!-- Button trigger modal -->
                       @if (session('success'))
-                      <p class="alert alert-success">
-                        {{ session('success') }}
+                      <p class="alert alert-success">{{ session('success') }}</p>
+                      @endif
                     </div>
-                    @endif
                   </div>
                 </div>
 
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                  Launch demo modal
-                </button>
+
 
               </div>
             </div>
@@ -220,22 +232,43 @@
           </div>
           <div class="modal-footer">
             <button type="button" id="confirmarEnvio" class="btn btn-primary">Si</button>
+            <button type="button" class="btn btn-secondary" id="botonNo">No</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="ModalBeneficiarios" tabindex="-1" aria-labelledby="ModalBeneficiariosLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            ¿Estás seguro de que deseas actualizar la fecha
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="confirmarEnvioBene" class="btn btn-primary">Si</button>
+            <button type="button" class="btn btn-secondary" id="botonNoBene">No</button>
           </div>
         </div>
       </div>
     </div>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        // Obtener el formulario y el botón de confirmación del modal
+        //asociado
         const formulario = document.getElementById('FormFechaUpdate');
         const botonConfirmar = document.getElementById('confirmarEnvio');
 
-        // Agregar un evento al formulario para abrir el modal cuando se envíe
         formulario.addEventListener('submit', function(event) {
-          event.preventDefault(); // Evitar el envío automático del formulario
-          $('#exampleModal').modal('show'); // Mostrar el modal de confirmación
+          event.preventDefault();
+          $('#exampleModal').modal('show');
         });
 
+        const botonCerrarModal = document.getElementById('botonNo')
+        botonCerrarModal.addEventListener('click', function() {
+          $('#exampleModal').modal('hide');
+          location.reload();
+        })
 
         botonConfirmar.addEventListener('click', function() {
           $('#exampleModal').modal('hide');
@@ -243,27 +276,62 @@
           var fechaNacimiento = $('#fechaNacimiento').val(); // Obtener la fecha de nacimiento del input
 
           const nuevaFecha = fechaInput.value;
-          const url = `/asociados/${cedula}`;
+          //const url = `/asociados/${cedula}`;
 
           $.ajax({
             url: "{{ route('asociados.update', ['asociado' => $asociado->cedula]) }}",
             method: 'PUT',
             data: {
-                fechaNacimiento: nuevaFecha,
-                _token: '{{ csrf_token() }}'
+              fechaNacimiento: nuevaFecha,
+              _token: '{{ csrf_token() }}'
             },
             success: function(response) {
-                console.log('Datos actualizados correctamente');
-                // Aquí puedes hacer algo después de que los datos se hayan actualizado
+              console.log('Datos actualizados correctamente');
+              // Aquí puedes hacer algo después de que los datos se hayan actualizado
             },
             error: function(xhr, status, error) {
-                console.error('Error al enviar los datos al servidor:', error);
+              console.error('Error al enviar los datos al servidor:', error);
             }
           });
-          
+        });
+
+        //beneficiarios
+        const formularioBene = document.getElementById('fechasBeneficiarios');
+        const confirmarEnvioBene = document.getElementById('confirmarEnvioBene');
+
+        formularioBene.addEventListener('submit', function(event) {
+          event.preventDefault();
+          $('#ModalBeneficiarios').modal('show');
+        });
+
+        const botonCerrarBene = document.getElementById('botonNoBene')
+        botonCerrarBene.addEventListener('click', function() {
+          $('#ModalBeneficiarios').modal('hide');
+          location.reload();
+        })
+
+        confirmarEnvioBene.addEventListener('click', function() {
+          $('#ModalBeneficiarios').modal('hide');
+
+          var formData = $(formularioBene).serialize();
+          $.ajax({
+            type: 'PUT',
+            url: "{{ route('beneficiarios.update',['beneficiario' => $asociado->cedula]) }}",
+            data: formData,
+            _token: '{{ csrf_token() }}',
+            success: function(response) {
+              console.log("Datos actualizados");
+              location.reload();
+            },
+            error: function(xhr, status, error) {
+              console.error(error);
+            }
+          });
         });
       });
     </script>
+
+
     <!-- <div class="body m-4">
         <h1>Información del Asociado</h1>
         <div>

@@ -79,10 +79,12 @@
         </div>
       </nav>
       <!-- End Navbar -->
-      <div class="panel-header panel-header-lg">
-        <canvas id="bigDashboardChart"></canvas>
+      
+      <div class="panel-header panel-header-lg vh-100">
+        <!-- <canvas id="bigDashboardChart"></canvas> -->
       </div>
-      <!-- <div class="content">
+      <!--
+       <div class="content">
         <div class="row">
           <div class="col-lg-4">
             <div class="card card-chart">
