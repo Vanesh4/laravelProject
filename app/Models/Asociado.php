@@ -47,4 +47,9 @@ class Asociado extends Model
         return $this->belongsTo(Cuidade::class, 'ciudad_id', 'codigo');
     }
 
+    public function distrito()
+    {
+        return $this->belongsTo(Distrito::class,'distrito_id', 'cod_dist');
+    }
+
 }

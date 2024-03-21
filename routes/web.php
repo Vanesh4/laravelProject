@@ -35,3 +35,7 @@ Route::get('/asociados/{id}/generarpdf', [AsociadoController::class, 'generarpdf
 
 Route::resource('asociados', AsociadoController::class);
 Route::resource('beneficiarios', BeneficiarioController::class);
+
+Route::get('/ejemplo', function () {
+    return view('asociados.showpdf');
+});

@@ -90,23 +90,25 @@
                   </div>
                 </div>
 
-                <form class="col-md-3 pl-1" id="FormFechaUpdate" method="POST">
-                  @csrf
-                  @method('PUT')
-                  <label for="fechaNacimiento">Fecha Nacimiento:</label>
-                  <div class="d-flex">
-                    <input class="col-md-11 form-control" id="fechaInput" type="date" name="fechaNacimiento">
-                    <script>
-                      document.addEventListener('DOMContentLoaded', function() {
-                        var fechaDesdeBD = "{{ $asociado->fechaNacimiento }}";
-                        document.getElementById('fechaInput').value = fechaDesdeBD;
-                      });
-                    </script>
-                    <button class="input-group-text" data-bs-toggle="modal" data-bs-target="#exampleModal" type="submit"><i class="now-ui-icons loader_refresh"></i></button>
-                  </div>
-                </form>
+                <div class="col-md-3">
+                  <form id="FormFechaUpdate" method="POST">
+                    <div class="form-group">
+                      <label for="fechaNacimiento" class="form-label">Fecha Nacimiento:</label>
+                      <div class="input-group">
+                        <input class="form-control" id="fechaInput" type="date" name="fechaNacimiento">
+                        <button class="btn form-control m-0 p-0" data-bs-toggle="modal" data-bs-target="#exampleModal" type="submit">Actualizar</button>
+                      </div>
+                      <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                          var fechaDesdeBD = "{{ $asociado->fechaNacimiento }}";
+                          document.getElementById('fechaInput').value = fechaDesdeBD;
+                        });
+                      </script>
+                    </div>
+                  </form>
+                </div>
 
-                <div class="col-md-2 pl-3">
+                <div class="col-md-2 pl-1">
                   <div class="form-group">
                     @php
                     $fecNac = new DateTime($asociado->fechaNacimiento);
@@ -124,19 +126,19 @@
                   <div class="col-md-2 pr-1">
                     <div class="form-group">
                       <label>Distrito</label>
-                      <div class="form-control">{{ $asociado->distrito_id }}</div>
+                      <div class="form-control">{{ $asociado->distrito->id }}</div>
 
                       <label>Direccion</label>
                       <div class="form-control">{{ $asociado->direccion }}</div>
 
                       <label>Ciudad</label>
                       @if ($asociado->ciudad_id !== null && $asociado->ciudad_id !== 0)
-                        <div class="form-control">{{ $asociado->ciudade->nombre }}</div>
+                      <div class="form-control">{{ $asociado->ciudade->nombre }}</div>
                       @else
-                        <div class="form-control">{{ $asociado->ciudade }}</div>
+                      <div class="form-control">{{ $asociado->ciudade }}</div>
                       @endif
                       <label>Observaciones</label>
-                      <p class="border border-secondary-subtle p-3">{{ $asociado->observacion_familia }}</p>
+                      <p class="border border-secondary-subtle p-3 rounded">{{ $asociado->observacion_familia }}</p>
                     </div>
                   </div>
                   <div class="col-md-10">
@@ -162,12 +164,12 @@
                                   <td>{{ $beneficiario->cedula }}</td>
                                   <td>{{ $beneficiario->apellido . $beneficiario->nombre }}</td>
                                   @if ($beneficiario->parentesco !== null && $beneficiario->parentesco !== 0)
-                                  <td>{{ $beneficiario->parentescoo->nomPar }}</td>
+                                    <td>{{ $beneficiario->parentescoo->nomPar }}</td>
                                   @else
-                                  <td>{{ $beneficiario->parentesco }}</td>
+                                    <td>{{ $beneficiario->parentesco }}</td>
                                   @endif
-                                  
-                                  
+
+
                                   <input type="hidden" name="ids[]" value="{{ $beneficiario->cedula }}">
                                   <td><input type="date" name="fechas[]" class="form-control" value="{{ $beneficiario->fechaNacimiento }}"></td>
                                   @php
@@ -196,19 +198,7 @@
                       <a href="{{ route('asociados.generarpdf', ['id' => $asociado->cedula]) }}" target="_blank" class="btn btn-primary">Generar PDF</a>
                     </div>
                   </div>
-                  <div class="col-md-auto">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Actualizar Fecha</button>
-                    <div class="form-group">
-                      <!-- Button trigger modal -->
-                      @if (session('success'))
-                      <p class="alert alert-success">{{ session('success') }}</p>
-                      @endif
-                    </div>
-                  </div>
                 </div>
-
-
-
               </div>
             </div>
           </div>
@@ -330,56 +320,5 @@
         });
       });
     </script>
-
-
-    <!-- <div class="body m-4">
-        <h1>Información del Asociado</h1>
-        <div>
-            <label>Cedula: <input value="{{ $asociado->cedula }}" readonly></label>
-            <label>Nombre: <input value="{{ $asociado->apellido . " " . $asociado->nombre }}" readonly></label>
-            <label>Fecha Nacimiento: <input value="{{ $asociado->fechaNacimiento }}" readonly></label>
-            <label>Edad: <input value="" readonly></label>
-        </div>
-
-        <section class="d-flex align-items-center justify-content-around m-4 section">
-            <div class="d-flex flex-column ">
-                <label>Distrito:<input value="{{ $asociado->distrito_id }}" readonly></label>
-                <label>Direccion: <input value="{{ $asociado->direccion }}" readonly></label>
-                <label>Ciudad: <input value="{{ $asociado->ciudade ? $asociado->ciudade->nombre : ' ' }}" readonly></label>
-                {{-- <label>Ciudad: <input value="{{ $asociado->ciudade->nombre }}" readonly></label> --}}
-                <label>Observaciones: <p class="border border-secondary-subtle ">{{ $asociado->observacion }}</p>
-                    </label>
-            </div>
-            <div>
-                <table class="table table-bordered">
-                    <tr>
-                        <th>Cedula</th>
-                        <th>Apellidos Nombre</th>
-                        <th>Parentezco</th>
-                        <th>Fecha Nacimiento</th>
-                        <th>Edad</th>
-                    </tr>
-                    @foreach ($beneficiarios as $beneficiario)
-                        <tr>
-                            <td>{{ $beneficiario->cedula }}</td>
-                            <td>{{ $beneficiario->apellido . $beneficiario->nombre }}</td>
-                            <td>{{ $beneficiario->paretentezco }}</td>
-                            <td>{{ $beneficiario->fechaNacimiento }}</td>
-
-                            @php
-                                $fecNac = new DateTime($beneficiario->fechaNacimiento);
-                                $fechaActual = new DateTime();
-                                $diferencia = $fecNac->diff($fechaActual);
-                                $edad = $diferencia->y;
-                            @endphp
-
-                            <td>{{ $edad }}</td>
-                        </tr>
-                    @endforeach
-                </table>
-            </div>
-        </section>        
-    </div> -->
 </body>
-
 </html>

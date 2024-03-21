@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8" />
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
@@ -119,7 +118,7 @@
                                                     <td>{{ $asociado->apellido . ' ' . $asociado->nombre }}</td>
 
                                                     @if ($asociado->distrito_id !== 0)
-                                                        <td>{{ $asociado->distrito_id }}</td>
+                                                        <td>{{ $asociado->distrito->id }}</td>
                                                     @else
                                                         <td></td>
                                                     @endif

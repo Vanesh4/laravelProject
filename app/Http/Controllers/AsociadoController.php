@@ -18,7 +18,7 @@ class AsociadoController extends Controller
     public function index()
     {
         //$asociados = Asociado::all();
-        $asociados = Asociado::with('ciudade')->paginate(10);
+        $asociados = Asociado::with(['ciudade', 'distrito'])->paginate(10);
         return view('asociados.index', ['asociados' => $asociados]);
     }
 
@@ -32,7 +32,6 @@ class AsociadoController extends Controller
         return view('asociados.show', compact('asociado', 'beneficiarios'));
     }
 
-
     public function update(Request $request, $cedula)
     {
         Asociado::where('cedula', $cedula)
@@ -44,14 +43,15 @@ class AsociadoController extends Controller
     }
 
     public function generarpdf($id)
-    {
-        $asociado = Asociado::where('cedula', $id)->firstOrFail();
-        $beneficiarios = Beneficiario::where('cedulaAsociado', $id)->get();
+    {        
+        $asociado = Asociado::where('cedula', $id)->with(['ciudade', 'distrito'])->firstOrFail();
+        $beneficiarios = beneficiario::where('cedulaAsociado', $id)->with('parentescoo')->get();     
+
 
         $data = ['asociado' => $asociado, 'beneficiarios' => $beneficiarios];
-
-        $pdf = PDF::loadView('asociados.show', $data)->setPaper('landscape');
+        $pdf = PDF::loadView('asociados.showpdf', $data)->setPaper('legal', 'landscape');
         //return $pdf->stream();
         return $pdf->download(date('Y-m-d') .  $asociado->nombre . '.pdf');
+        //return view('asociados.showpdf', $data);
     }
 }
