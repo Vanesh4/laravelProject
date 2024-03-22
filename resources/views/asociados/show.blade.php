@@ -126,7 +126,12 @@
                   <div class="col-md-2 pr-1">
                     <div class="form-group">
                       <label>Distrito</label>
+                      
+                      @if ($asociado->distrito !== null && $asociado->distrito !== 0)
                       <div class="form-control">{{ $asociado->distrito->id }}</div>
+                      @else
+                      <div class="form-control">{{ $asociado->distrito }}</div>
+                      @endif
 
                       <label>Direccion</label>
                       <div class="form-control">{{ $asociado->direccion }}</div>
